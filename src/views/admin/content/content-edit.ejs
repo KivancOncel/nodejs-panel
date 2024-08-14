@@ -1,0 +1,162 @@
+<%- include('../../layouts/head.ejs') %>  
+    <link rel="stylesheet" href="/assets/css/image-uploader.min.css">  
+    </head>
+
+    <body><!-- Begin page -->
+        <div class="wrapper">
+            
+            <%- include('../../layouts/topbar.ejs') %>
+
+            <%- include('../../layouts/navigation.ejs') %>
+
+            <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/admin/dashboard">Grator</a></li>
+                                        <li class="breadcrumb-item active">Kullanıcı Güncelle</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Kullanıcı Güncelle</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->                    
+
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" action="/admin/content/content-add" enctype="multipart/form-data">
+                                <div class="row row-cols-sm-2 row-cols-1">
+                                    <div class="col-12 col-md-8" id="pageData">
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageTitle">Page Title</label>
+                                            <input type="text" name="pageTitle" value="<%=contents.title%>" id="pageTitle"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageDesciption">Page Desciption</label>
+                                            <textarea name="pageDesciption" id="pageDesciption" class="form-control" rows="5"><%=contents.description%></textarea>
+                                        </div>
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageSummary">Page Summary</label>
+                                            <textarea name="pageSummary" id="pageSummary" class="form-control"><%=contents.summary%></textarea>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-2">
+                                            <label class="form-label"
+                                                for="seoKeywords">Seo Keywords</label>
+                                            <input type="text" name="seoKeywords" value="<%=contents.keywords%>" id="seoKeywords"
+                                                class="form-control">
+                                            <span><i>Write the words with commas.</i></span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label" for="seoDesciption">Seo Description</label>
+                                            <textarea onkeyup="limit(this)" name="seoDesciption" id="seoDesciption" class="form-control" rows="5"><%=contents.seoDescription%></textarea>
+                                            <span id="counter"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="pageLevel">Main/Parent Page</label>
+                                            <select class="form-control" name="pageLevel" id="pageLevel">
+                                                <option value="0">Main Page</option>
+                                                <% for (let data of Object.values(datas)) {  %> 
+                                                    <% if(data._id == contents.level ) {$selected = "selected"} else {$selected = ""} %>
+                                                    <option value="<%=data._id%>" <%=$selected%>><%=data.title%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="pageImage">Page Image</label><br>
+                                            <% if(contents.photo != "") { %>
+                                            <a data-bs-toggle="modal" data-bs-target="#full-width-modal" style="cursor: pointer">
+                                                <img src="/uploads/<%=contents.photo%>" width="100%" />
+                                            </a>
+                                            <% } %>
+                                            <div id="pageImage" class="input-images-1" style="padding-top: .5rem;"></div>
+                                            <!-- input type="file" name="images" / -->
+                                            <div id="full-width-modal" class="modal fade" tabindex="-1" aria-labelledby="fullWidthModalLabel" aria-hidden="true" style="display: none;">
+                                                <div class="modal-dialog modal-full-width">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="fullWidthModalLabel"><%=contents.title%> Page Photo</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <img src="/uploads/<%=contents.photo%>" width="960" />
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal-dialog -->
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            Save
+                                        </button>
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel"><%=contents.title%> Update Page</h5>
+                                                    </div> <!-- end modal header -->
+                                                    <div class="modal-body">
+                                                        <p class="m-0">Do you confirm the updates you made?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                                                        
+                                                        <input class="btn btn-primary" type="submit" value="Save" />
+                                                    </div> <!-- end modal footer -->
+                                                </div> <!-- end modal content-->
+                                            </div> <!-- end modal dialog-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"
+                    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+            <script src="/assets/js/image-uploader.min.js"></script>
+            <script src="/assets/js/tinymce/tinymce.min.js"></script>
+            <script>
+                tinymce.init({
+                selector: '#pageData textarea',  // change this value according to your HTML
+                a_plugin_option: true,
+                a_configuration_option: 400,
+                height: 300
+                });
+
+                $('.input-images-1').imageUploader();
+
+                var max_chars = 160;
+                var charsLeftDisplay = document.getElementById("counter");
+
+                function limit(element) {
+                if (element.value.length > max_chars) {
+                    element.value = element.value.slice(0, -1);
+                    return false;
+                }
+                charsLeftDisplay.innerHTML = "<i>" + (max_chars - element.value.length) + " characters left...</i>";
+                }
+            </script>
+        <%- include('../../layouts/end.ejs') %>

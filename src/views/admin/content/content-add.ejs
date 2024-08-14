@@ -1,0 +1,123 @@
+<%- include('../../layouts/head.ejs') %>  
+    <link rel="stylesheet" href="/assets/css/image-uploader.min.css">  
+    </head>
+
+    <body><!-- Begin page -->
+        <div class="wrapper">
+            
+            <%- include('../../layouts/topbar.ejs') %>
+
+            <%- include('../../layouts/navigation.ejs') %>
+
+            <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/admin/dashboard">Grator</a></li>
+                                        <li class="breadcrumb-item active">Kullanıcı Güncelle</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Kullanıcı Güncelle</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->                    
+
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" action="/admin/content/content-add" enctype="multipart/form-data">
+                                <div class="row row-cols-sm-2 row-cols-1">
+                                    <div class="col-12 col-md-8" id="pageData">
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageTitle">Page Title</label>
+                                            <input type="text" name="pageTitle" value="" id="pageTitle"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageDesciption">Page Desciption</label>
+                                            <textarea name="pageDesciption" id="pageDesciption" class="form-control" rows="5"></textarea>
+                                        </div>
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageSummary">Page Summary</label>
+                                            <textarea name="pageSummary" id="pageSummary" class="form-control"></textarea>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-2">
+                                            <label class="form-label"
+                                                for="seoKeywords">Seo Keywords</label>
+                                            <input type="text" name="seoKeywords" value="" id="seoKeywords"
+                                                class="form-control">
+                                            <span><i>Write the words with commas.</i></span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label" for="seoDesciption">Seo Description</label>
+                                            <textarea onkeyup="limit(this)" name="seoDesciption" id="seoDesciption" class="form-control" rows="5"></textarea>
+                                            <span id="counter"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="pageLevel">Main/Parent Page</label>
+                                            <select class="form-control" name="pageLevel" id="pageLevel">
+                                                <option value="0">Main Page</option>
+                                                <% for (let data of contents) {  %> 
+                                                    <option value="<%=data._id%>"><%=data.title%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="pageImage">Page Image</label>
+                                                <div id="pageImage" class="input-images-1" style="padding-top: .5rem;"></div>
+                                                <!-- input type="file" name="images" / -->
+                                        </div>
+                                        <input class="btn btn-primary" type="submit" value="Save" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"
+                    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+            <script src="/assets/js/image-uploader.min.js"></script>
+            <script src="/assets/js/tinymce/tinymce.min.js"></script>
+            <script>
+                tinymce.init({
+                selector: '#pageData textarea',  // change this value according to your HTML
+                a_plugin_option: true,
+                a_configuration_option: 400,
+                height: 300
+                });
+
+                $('.input-images-1').imageUploader();
+
+                var max_chars = 160;
+                var charsLeftDisplay = document.getElementById("counter");
+
+                function limit(element) {
+                if (element.value.length > max_chars) {
+                    element.value = element.value.slice(0, -1);
+                    return false;
+                }
+                charsLeftDisplay.innerHTML = "<i>" + (max_chars - element.value.length) + " characters left...</i>";
+                }
+            </script>
+        <%- include('../../layouts/end.ejs') %>

@@ -1,0 +1,85 @@
+<%- include('../../layouts/head.ejs') %>    
+    </head>
+
+    <body><!-- Begin page -->
+        <div class="wrapper">
+            
+            <%- include('../../layouts/topbar.ejs') %>
+
+            <%- include('../../layouts/navigation.ejs') %>
+<!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="/admin/dashboard">Grator Ajans</a></li>
+                                            <li class="breadcrumb-item active" ><a href="/admin/user/user-list">User List</a></li>
+                                            <li class="breadcrumb-item active">Update User Image</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Update User Image</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="header-title">Update User Image</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-control">
+                                        <form action="/admin/user/user-image/<%= req.params.userId %>" method="POST" enctype="multipart/form-data">
+                                            <input class="form-control" type="file" name="file">
+                                            <input type="hidden" name="userId" value="<%= req.params.userId %>">
+                                            <button class="btn btn-primary mt-2" type="submit"><i
+                                                class="ri-save-line me-1 fs-16 lh-1"></i> Save</button>
+                                        </form>
+
+                                    </div>
+                                    <!-- end card-body -->
+                                </div>
+                                <!-- end card-->
+                            </div>
+                            <!-- end col-->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+                    <!-- container -->
+
+                </div>
+                <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <script>document.write(new Date().getFullYear())</script> © Velonic - Theme by <b>Techzaa</b>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        <%- include('../../layouts/end.ejs') %>
