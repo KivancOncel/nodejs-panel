@@ -3,20 +3,18 @@ const getDb = require("../util/database").getDb;
 
 module.exports = {
   async getTitleByID(levelId) {
-    const db = await getDb();
-    return await db
-      .collection("content")
-      .find({ level: levelId })
-      .toArray()
-      .then((content) => {
-        if (levelId != 0) {
-          return content.title;
-        } else {
-          return false;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (levelId == 0) {
+      return false;
+    }
+
+    try {
+      const db = await getDb();
+      const content = await db
+        .collection("content")
+        .findOne({ level: levelId });
+      return content ? content.title : false;
+    } catch (err) {
+      console.log(err);
+    }
   },
 };
