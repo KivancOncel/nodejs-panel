@@ -53,6 +53,7 @@ exports.addContent = (req, res, next) => {
   const seoDesciption = req.body.seoDesciption;
   const pageLevel = req.body.pageLevel;
   const image = req.file.filename;
+  const slug = req.body.pageSlug;
   const content = new Content(
     pageTitle,
     pageSummary,
@@ -60,8 +61,10 @@ exports.addContent = (req, res, next) => {
     seoKeywords,
     seoDesciption,
     pageLevel,
-    image
+    image,
+    slug
   );
+  
   content
     .save()
     .then(() => {
@@ -117,3 +120,39 @@ exports.getContentInfo = (req, res, next) => {
     });
   }
 }
+exports.editContentInfo = (req, res, next) => {
+  const contentId = req.params.contentId;
+  const pageTitle = req.body.pageTitle;
+  const pageDesciption = req.body.pageDesciption;
+  const pageSummary = req.body.pageSummary;
+  const seoKeywords = req.body.seoKeywords;
+  const seoDesciption = req.body.seoDesciption;
+  const pageLevel = req.body.pageLevel;
+  const pageSlug = req.body.pageSlug;
+
+  // Eğer yeni görsel yüklendiyse onu kullan, yoksa eskiyi kullan
+  let image;
+  if (req.file && req.file.filename) {
+    image = req.file.filename;
+  } else {
+    image = req.body.oldImage; // Formda eski görsel adını gizli input ile gönder
+  }
+
+  Content.updateContent(
+    contentId,
+    pageTitle,
+    pageSummary,
+    pageDesciption,
+    seoKeywords,
+    seoDesciption,
+    pageLevel,
+    image,
+    pageSlug
+  )
+    .then((result) => {
+      res.redirect("/admin/content/content-list");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

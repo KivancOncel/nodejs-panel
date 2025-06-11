@@ -1,0 +1,11 @@
+<ul class="navbar-nav">
+  <% headerMenus.forEach(function(menu) { %>
+    <li class="nav-item">
+      <a class="nav-link" href="<%= menu.url %>"><%= menu.title %></a>
+    </li>
+  <% }) %>
+</ul>
+<h1><%= content.title %></h1>
+<div>
+  <%= content.description %>
+</div>

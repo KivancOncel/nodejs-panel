@@ -6,7 +6,7 @@ let _db;
 
 const { MONGODB_USER, MONGODB_PASS } = process.env;
 
-const mongoUrl = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.edtvsxp.mongodb.net/panel?retryWrites=true&w=majority`;
+const mongoUrl = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@fovizo.woi54ib.mongodb.net/panel?retryWrites=true&w=majority`;
 
 const getDb = async () => {
   if (!_db) {

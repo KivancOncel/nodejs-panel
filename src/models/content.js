@@ -13,6 +13,7 @@ class Content {
     level,
     photo,
     createDate,
+    slug,
     id
   ) {
     this._id = id ? new mongodb.ObjectId(id) : null;
@@ -24,6 +25,7 @@ class Content {
     this.level = level;
     this.photo = photo;
     this.createDate = Date.now();
+    this.slug = slug;
   }
 
   async save() {
@@ -87,6 +89,28 @@ class Content {
       .catch((err) => {
         console.log(err);
       });
+  }
+  static async updateContent(id, pageTitle, pageSummary, pageDesciption, seoKeywords, seoDesciption, pageLevel, image, pageSlug) {
+    const db = await getDb();
+    return db.collection("content").updateOne(
+      { _id: new mongodb.ObjectId(id) },
+      {
+        $set: {
+          title: pageTitle,
+          summary: pageSummary,
+          description: pageDesciption,
+          keywords: seoKeywords,
+          seoDescription: seoDesciption,
+          level: pageLevel,
+          photo: image,
+          slug: pageSlug
+        }
+      }
+    );
+  }
+  static async getBySlug(slug) {
+    const db = await getDb();
+    return db.collection("content").findOne({ slug: slug });
   }
 }
 

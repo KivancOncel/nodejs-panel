@@ -53,36 +53,38 @@
                                                     <th>Settings</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>                                           
-                                                <% for (let data of content) {  %>     
-                                                    <% if(data.level == 0 ) {%>                                                            
-                                                    <tr>
-                                                    <% } else { %>
-                                                    <tr style="margin-left: 20px">
-                                                    <% } %>
-                                                        <td>
-                                                            <%=data.title%>
-                                                        </td>
-                                                        <td>
-                                                            <%=data.summary.replace(/(<p>|<\/p>)/g, "")%></td>  
-                                                        <td>                                 
-                                                            <% if(data.level == data._id) { %>
-                                                                <%=data.title%>
-                                                            <% } else { %>
-                                                                Main Menu
-                                                            <% } %>
-                                                        </td>                                                       
-                                                        <td>
-                                                            <%=new Date(data.createDate).toLocaleString()%></td>
-                                                        <td>                                                       
-                                                            <a title="Edit Content" href="/admin/content/content-edit/<%=data._id%>" class="text-reset fs-16 px-1"> <i
-                                                                    class="ri-settings-3-line"></i></a>
-                                                            <a title="Delete Content" href="/admin/content/content-delete/<%=data._id%>" class="text-reset fs-16 px-1"> <i
-                                                                    class="ri-delete-bin-2-line"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                <% } %>                                                
-                                            </tbody>
+                                            <% 
+                                                // Parent-child ilişkisini kurmak için yardımcı fonksiyon
+                                                function renderContentList(contents, parentId, prefix) {
+                                                    contents
+                                                        .filter(item => (item.level == parentId || (!parentId && item.level == 0)))
+                                                        .forEach(item => { %>
+                                                            <tr>
+                                                                <td><%= prefix %><%= item.title %></td>
+                                                                <td><%= item.summary.replace(/(<p>|<\/p>)/g, "") %></td>
+                                                                <td>
+                                                                    <% if(item.level == 0) { %>
+                                                                        Main Menu
+                                                                    <% } else { %>
+                                                                        <%= contents.find(c => c._id.toString() === item.level.toString())?.title || "Unknown" %>
+                                                                    <% } %>
+                                                                </td>
+                                                                <td><%= new Date(item.createDate).toLocaleString() %></td>
+                                                                <td>
+                                                                    <a title="Edit Content" href="/admin/content/content-edit/<%= item._id %>" class="text-reset fs-16 px-1">
+                                                                        <i class="ri-settings-3-line"></i>
+                                                                    </a>
+                                                                    <a title="Delete Content" href="/admin/content/content-delete/<%= item._id %>" class="text-reset fs-16 px-1">
+                                                                        <i class="ri-delete-bin-2-line"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <% // Alt sayfalar için recursive çağrı
+                                                            renderContentList(contents, item._id, prefix + "- ");
+                                                        });
+                                                }
+                                                renderContentList(content, 0, "");
+                                            %>
                                         </table>
                                     </div> <!-- end table-responsive-->
 

@@ -34,15 +34,19 @@
                         </div>
                     </div>
                     <!-- end page title -->                    
-
                     <div class="row">
                         <div class="col-12">
-                            <form method="post" action="/admin/content/content-add" enctype="multipart/form-data">
+                            <form method="post" action="/admin/content/content-edit/<%= contents._id %>" enctype="multipart/form-data">
                                 <div class="row row-cols-sm-2 row-cols-1">
                                     <div class="col-12 col-md-8" id="pageData">
                                         <div class="form-control mb-2">
                                             <label class="form-label" for="pageTitle">Page Title</label>
                                             <input type="text" name="pageTitle" value="<%=contents.title%>" id="pageTitle"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-control mb-2">
+                                            <label class="form-label" for="pageSlug">Page Slug</label>
+                                            <input type="text" name="pageSlug" value="<%=contents.slug%>" id="pageSlug"
                                                 class="form-control">
                                         </div>
                                         <div class="form-control mb-2">
@@ -104,6 +108,7 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div>
                                         </div>
+                                        <input type="hidden" name="oldImage" value="<%= contents.photo %>">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                             Save
                                         </button>

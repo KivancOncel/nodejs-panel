@@ -1,0 +1,61 @@
+<%- include('../../layouts/head.ejs') %>
+</head>
+<body>
+    <div class="wrapper">
+        <%- include('../../layouts/topbar.ejs') %>
+        <%- include('../../layouts/navigation.ejs') %>
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Edit Menu</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" action="/admin/menu/menu-edit/<%= menu._id %>">
+                                <div class="mb-3">
+                                    <label class="form-label">Menu Title</label>
+                                    <input type="text" name="title" class="form-control" value="<%= menu.title %>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Menu URL</label>
+                                    <input type="text" name="url" class="form-control" value="<%= menu.url %>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Order</label>
+                                    <input type="number" name="order" class="form-control" value="<%= menu.order %>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Parent Menu</label>
+                                    <select name="parent" class="form-control">
+                                        <option value="">Ana Menü</option>
+                                        <% menus.forEach(function(m) { %>
+                                            <% if (menu._id.toString() !== m._id.toString()) { %>
+                                                <option value="<%= m._id %>" <%= menu.parent == m._id.toString() ? "selected" : "" %>><%= m.title %></option>
+                                            <% } %>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Menu Group</label>
+                                    <select name="group" class="form-control" required>
+                                        <option value="header" <%= menu.group === "header" ? "selected" : "" %>>Header</option>
+                                        <option value="footer" <%= menu.group === "footer" ? "selected" : "" %>>Footer</option>
+                                        <option value="sidebar" <%= menu.group === "sidebar" ? "selected" : "" %>>Sidebar</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-success">Update Menu</button>
+                                <a href="/admin/menu/menu-list" class="btn btn-secondary">Back</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../layouts/end.ejs') %>
+    </div>
+</body>
