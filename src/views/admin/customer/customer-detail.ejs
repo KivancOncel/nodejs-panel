@@ -1,0 +1,65 @@
+<%- include('../../layouts/head.ejs') %>
+<body>
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="/admin/dashboard">Grator Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin/customer/customer-list">Customer List</a></li>
+                                    <li class="breadcrumb-item active">Customer Detail</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Customer Detail</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="header-title">Customer Information</h4>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Ad Soyad</dt>
+                                    <dd class="col-sm-8"><%= customer.name %></dd>
+
+                                    <dt class="col-sm-4">E-posta</dt>
+                                    <dd class="col-sm-8"><%= customer.email %></dd>
+
+                                    <dt class="col-sm-4">Telefon</dt>
+                                    <dd class="col-sm-8"><%= customer.phone %></dd>
+
+                                    <dt class="col-sm-4">Kayıt Tarihi</dt>
+                                    <dd class="col-sm-8"><%= new Date(customer.createdAt).toLocaleString() %></dd>
+
+                                    <dt class="col-sm-4">Durum</dt>
+                                    <dd class="col-sm-8"><%= customer.status ? "Aktif" : "Pasif" %></dd>
+
+                                    <dt class="col-sm-4">Son Giriş</dt>
+                                    <dd class="col-sm-8"><%= customer.lastLogin ? new Date(customer.lastLogin).toLocaleString() : "-" %></dd>
+                                </dl>
+                                <% if (customer.addresses && customer.addresses.length) { %>
+                                    <h5>Adresler</h5>
+                                    <ul>
+                                        <% customer.addresses.forEach(function(address) { %>
+                                            <li><%= address %></li>
+                                        <% }) %>
+                                    </ul>
+                                <% } %>
+                                <a href="/admin/customer/customer-list" class="btn btn-secondary mt-2">Geri</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../../layouts/end.ejs') %>
+</body>

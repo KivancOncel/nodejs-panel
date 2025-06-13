@@ -7,6 +7,7 @@ const contentController = require("../controller/content");
 const menuController = require("../controller/menu");
 const productController = require("../controller/product");
 const categoryController = require("../controller/category");
+const customerController = require("../controller/customer");
 
 const multer = require('multer');
 
@@ -84,5 +85,9 @@ router.post("/category/category-add", categoryController.postAddCategory);
 router.get("/category/category-edit/:categoryId", categoryController.getEditCategory);
 router.post("/category/category-edit/:categoryId", categoryController.postEditCategory);
 router.get("/category/category-delete/:categoryId", categoryController.deleteCategory);
+
+router.get("/customer/customer-list", customerController.getCustomerList);
+router.get("/customer/customer-detail/:customerId", customerController.getCustomerDetail);
+router.get("/customer/customer-delete/:customerId", customerController.deleteCustomer);
 
 module.exports = router;
