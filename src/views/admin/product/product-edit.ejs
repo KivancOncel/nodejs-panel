@@ -1,0 +1,62 @@
+<%- include('../../layouts/head.ejs') %>
+<body>
+<div class="container">
+  <h2>Edit Product</h2>
+  <form method="post" action="/admin/product/product-edit/<%= product._id %>" enctype="multipart/form-data">
+    <input type="text" name="name" value="<%= product.name %>" placeholder="Ürün Adı" class="form-control" required>
+    <textarea name="description" placeholder="Ürün Açıklaması" class="form-control"><%= product.description %></textarea>
+    <textarea name="summary" placeholder="Ürün Özet Metni" class="form-control"><%= product.summary %></textarea>
+    <input type="text" name="slug" value="<%= product.slug %>" placeholder="Ürün URL" class="form-control" required>
+    <div class="mb-3">
+        <label class="form-label">Product Category</label>
+        <select name="category" class="form-control" required>
+            <option value="">Kategori Seçiniz</option>
+            <% categories.forEach(function(cat) { %>
+            <option value="<%= cat._id %>" <%= product.category == cat._id.toString() ? "selected" : "" %>><%= cat.name %></option>
+            <% }) %>
+        </select>
+    </div>
+    <input type="text" name="dimensions" value="<%= product.dimensions %>" placeholder="Ürün Boyutları" class="form-control">
+    <input type="number" name="price" value="<%= product.price %>" placeholder="Ürün Fiyatı" class="form-control">
+    <input type="number" name="discountPrice" value="<%= product.discountPrice %>" placeholder="Ürün İndirimli Fiyatı" class="form-control">
+    <input type="number" name="imageCount" value="<%= product.imageCount %>" placeholder="Kaç Resim Yüklenecek" class="form-control">
+    <input type="text" name="sku" value="<%= product.sku %>" placeholder="Ürün Kodu/SKU" class="form-control">
+    <input type="number" name="stock" value="<%= product.stock %>" placeholder="Stok Adedi" class="form-control">
+    <input type="text" name="deliveryTime" value="<%= product.deliveryTime %>" placeholder="Teslimat Süresi" class="form-control">
+    <input type="text" name="printType" value="<%= product.printType %>" placeholder="Baskı Türü/Kağıt Türü" class="form-control">
+    <input type="number" name="minOrder" value="<%= product.minOrder %>" placeholder="Minimum Sipariş Adedi" class="form-control">
+    <input type="text" name="extraFeatures" value="<%= product.extraFeatures %>" placeholder="Ekstra Özellikler" class="form-control">
+    <input type="number" name="vatRate" value="<%= product.vatRate %>" placeholder="KDV Oranı" class="form-control">
+    <input type="text" name="tags" value="<%= product.tags %>" placeholder="Etiketler (virgülle ayır)" class="form-control">
+    <label>
+      <input type="checkbox" name="isActive" <%= product.isActive ? "checked" : "" %>> Aktif
+    </label>
+    <label>
+      <input type="checkbox" name="isFeatured" <%= product.isFeatured ? "checked" : "" %>> Öne Çıkan Ürün
+    </label>
+    <div>
+      <label>Mevcut Ana Görsel:</label>
+      <% if(product.mainImage) { %>
+        <img src="/uploads/<%= product.mainImage %>" alt="Ana Görsel" style="max-width:100px;">
+      <% } %>
+      <input type="file" name="mainImage" class="form-control">
+    </div>
+    <div>
+      <label>Mevcut Slider Görselleri:</label>
+      <% if(product.sliderImages && product.sliderImages.length) { %>
+        <% product.sliderImages.forEach(function(img) { %>
+          <img src="/uploads/<%= img %>" alt="Slider" style="max-width:80px;">
+        <% }) %>
+      <% } %>
+      <input type="file" name="sliderImages" class="form-control" multiple>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Düzenlenebilir Alanlar (JSON)</label>
+        <textarea name="editableFields" class="form-control" rows="6"><%= JSON.stringify(product.editableFields || [], null, 2) %></textarea>
+        <small class="text-muted">Her ürün için farklı düzenleme alanlarını JSON formatında tanımlayabilirsin.</small>
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Güncelle</button>
+    <a href="/admin/product/product-list" class="btn btn-secondary mt-2">Geri</a>
+  </form>
+</div>
+<%- include('../../layouts/end.ejs') %>

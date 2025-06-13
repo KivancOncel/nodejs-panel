@@ -1,0 +1,163 @@
+<%- include('../../layouts/head.ejs') %>    
+    </head>
+
+    <body><!-- Begin page -->
+        <div class="wrapper">
+            
+            <%- include('../../layouts/topbar.ejs') %>
+
+            <%- include('../../layouts/navigation.ejs') %>
+
+            <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/admin/dashboard">Grator</a></li>
+                                        <li class="breadcrumb-item active">Product Add</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Product Add</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->                    
+
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="post" action="/admin/product/product-add">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="mb-2">
+                                            <label class="form-label" for="FullName">Product Name</label>
+                                            <input type="text" name="name" placeholder="Product Name" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Username">Product URL</label>
+                                            <input type="text" name="slug" placeholder="Product URL" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Email">Product Description</label>
+                                            <textarea name="description" class="form-control"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="web-url">Product Detail</label>
+                                            <textarea name="summary" class="form-control"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="Password">Product Category</label>
+                                            <select name="category" class="form-control" required>
+                                                <option value="">Choose Category</option>
+                                                <% categories.forEach(function(cat) { %>
+                                                    <option value="<%= cat._id %>"><%= cat.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="RePassword">Product Dimensions</label>
+                                            <input type="text" name="dimensions" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="phone">Price</label>
+                                            <input type="number" name="price" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="title">Discount Price</label>
+                                            <input type="number" name="discountPrice" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Image Count</label>
+                                            <input type="number" name="imageCount" placeholder="How Many Images Will Be Uploaded?" class="form-control">
+                                        </div>
+                                        
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Stock Code</label>
+                                            <input type="text" name="sku" class="form-control">
+                                        </div>   
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Delivery Time</label>
+                                            <input type="text" name="deliveryTime" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Print Type</label>
+                                            <input type="text" name="printType" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Minimum Order Number</label>
+                                            <input type="number" name="minOrder" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Extra Options</label>
+                                            <input type="text" name="extraFeatures" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">VAT Rate</label>
+                                            <input type="number" name="vatRate" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Product Tag</label>
+                                            <input type="text" name="tags" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">
+                                            <input type="checkbox" name="isActive"> Is Active?</label>                                         
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">                                
+                                            <input type="checkbox" name="isFeatured"> Featured Product    </label>                                            
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Main Image</label>                                        
+                                            <input type="file" name="mainImage" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 mb-3">
+                                            <label class="form-label" for="AboutMe">Image Gallery</label>                                    
+                                            <input type="file" name="sliderImages" class="form-control" multiple>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Düzenlenebilir Alanlar (JSON)</label>
+                                            <textarea name="editableFields" class="form-control" rows="6" placeholder='Ör: [{"type":"text","label":"Alt Yazı","name":"subtitle"}]'></textarea>
+                                            <small class="text-muted">Her ürün için farklı düzenleme alanlarını JSON formatında tanımlayabilirsin.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" type="submit"><i
+                                        class="ri-save-line me-1 fs-16 lh-1"></i> Save</button>
+                            </form>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+            
+            <script src="/assets/js/tinymce/tinymce.min.js"></script>
+            <script>
+                tinymce.init({
+                selector: 'textarea',  // change this value according to your HTML
+                plugins: 'a_tinymce_plugin',
+                a_plugin_option: true,
+                a_configuration_option: 400
+                });
+            </script>
+
+        <%- include('../../layouts/end.ejs') %>

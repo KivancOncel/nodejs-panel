@@ -1,0 +1,33 @@
+<%- include('../../layouts/head.ejs') %>
+<body>
+<div class="content-page">
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="page-title-box">
+            <h4 class="page-title">Kategori Düzenle</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <form method="post" action="/admin/category/category-edit/<%= category._id %>">
+            <div class="mb-3">
+              <label class="form-label">Kategori Adı</label>
+              <input type="text" name="name" class="form-control" value="<%= category.name %>" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Kategori URL (slug)</label>
+              <input type="text" name="slug" class="form-control" value="<%= category.slug %>" required>
+            </div>
+            <button type="submit" class="btn btn-success">Güncelle</button>
+            <a href="/admin/category/category-list" class="btn btn-secondary">Geri</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../../layouts/end.ejs') %>
+</body>

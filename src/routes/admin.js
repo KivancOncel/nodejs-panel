@@ -5,6 +5,8 @@ const adminController = require("../controller/admin");
 const userController = require("../controller/user");
 const contentController = require("../controller/content");
 const menuController = require("../controller/menu");
+const productController = require("../controller/product");
+const categoryController = require("../controller/category");
 
 const multer = require('multer');
 
@@ -53,5 +55,34 @@ router.post("/menu/menu-add", menuController.postAddMenu);
 router.get("/menu/menu-edit/:menuId", menuController.getEditMenu);
 router.post("/menu/menu-edit/:menuId", menuController.postEditMenu);
 router.get("/menu/menu-delete/:menuId", menuController.deleteMenu);
+
+router.get("/product/product-list", productController.getProductList);
+router.get("/product/product-add", productController.getAddProduct);
+router.get("/product/product-edit/:productId", productController.getEditProduct);
+router.get("/product/product-delete/:productId", productController.deleteProduct);
+router.post(
+  "/product/product-add",
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "sliderImages", maxCount: 10 }
+  ]),
+  productController.postAddProduct
+);
+
+router.post(
+  "/product/product-edit/:productId",
+  upload.fields([
+    { name: "mainImage", maxCount: 1 },
+    { name: "sliderImages", maxCount: 10 }
+  ]),
+  productController.postEditProduct
+);
+
+router.get("/category/category-list", categoryController.getCategoryList);
+router.get("/category/category-add", categoryController.getAddCategory);
+router.post("/category/category-add", categoryController.postAddCategory);
+router.get("/category/category-edit/:categoryId", categoryController.getEditCategory);
+router.post("/category/category-edit/:categoryId", categoryController.postEditCategory);
+router.get("/category/category-delete/:categoryId", categoryController.deleteCategory);
 
 module.exports = router;
