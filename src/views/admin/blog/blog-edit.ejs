@@ -1,0 +1,77 @@
+<%- include('../../layouts/head.ejs') %>
+<body>
+    <div class="wrapper">
+        <%- include('../../layouts/topbar.ejs') %>
+        <%- include('../../layouts/navigation.ejs') %>
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/admin/dashboard">Grator Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="/admin/blog/blog-list">Blog List</a></li>
+                                        <li class="breadcrumb-item active">Edit Blog</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Edit Blog</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="post" action="/admin/blog/blog-edit/<%= blog._id %>" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label class="form-label">Başlık</label>
+                                            <input type="text" name="title" class="form-control" value="<%= blog.title %>" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Slug</label>
+                                            <input type="text" name="slug" class="form-control" value="<%= blog.slug %>" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Kısa Açıklama</label>
+                                            <textarea name="summary" class="form-control"><%= blog.summary %></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">İçerik</label>
+                                            <textarea name="content" class="form-control" rows="6"><%= blog.content %></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Mevcut Kapak Görseli:</label>
+                                            <% if(blog.coverImage) { %>
+                                                <img src="/uploads/<%= blog.coverImage %>" alt="Kapak" style="max-width:100px;">
+                                            <% } %>
+                                            <input type="hidden" name="oldCoverImage" value="<%= blog.coverImage %>">
+                                            <input type="file" name="coverImage" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Etiketler (virgülle ayır)</label>
+                                            <input type="text" name="tags" class="form-control" value="<%= blog.tags ? blog.tags.join(', ') : '' %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Yazar</label>
+                                            <input type="text" name="author" class="form-control" value="<%= blog.author %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>
+                                                <input type="checkbox" name="isPublished" <%= blog.isPublished ? "checked" : "" %>> Yayında
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Güncelle</button>
+                                        <a href="/admin/blog/blog-list" class="btn btn-secondary">Geri</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../layouts/end.ejs') %>
+    </div>
+</body>

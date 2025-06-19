@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const auth = require("../middleware/auth");
 
 const adminController = require("../controller/admin");
 const userController = require("../controller/user");
@@ -8,6 +9,8 @@ const menuController = require("../controller/menu");
 const productController = require("../controller/product");
 const categoryController = require("../controller/category");
 const customerController = require("../controller/customer");
+const blogController = require("../controller/blog");
+const orderController = require("../controller/order");
 
 const multer = require('multer');
 
@@ -26,8 +29,9 @@ const router = express.Router();
 
 router.get("/", adminController.getIndex);
 router.post("/", adminController.postLogin);
-router.get("/dashboard", adminController.getDashboard);
 router.get("/logout", adminController.destroySession);
+router.use(auth);
+router.get("/dashboard", adminController.getDashboard);
 router.get("/user/profile/:userId", userController.getUserById);
 router.post("/user/profile/edit-profile/:userId", userController.editUserInfo);
 router.get("/user/user-list", userController.getAllUser);
@@ -89,5 +93,17 @@ router.get("/category/category-delete/:categoryId", categoryController.deleteCat
 router.get("/customer/customer-list", customerController.getCustomerList);
 router.get("/customer/customer-detail/:customerId", customerController.getCustomerDetail);
 router.get("/customer/customer-delete/:customerId", customerController.deleteCustomer);
+
+router.get("/blog/blog-list", blogController.getBlogList);
+router.get("/blog/blog-add", blogController.getAddBlog);
+router.post("/blog/blog-add", upload.single("coverImage"), blogController.postAddBlog);
+router.get("/blog/blog-edit/:blogId", blogController.getEditBlog);
+router.post("/blog/blog-edit/:blogId", upload.single("coverImage"), blogController.postEditBlog);
+router.get("/blog/blog-delete/:blogId", blogController.deleteBlog);
+
+router.get("/order/order-list", orderController.getOrderList);
+router.get("/order/order-detail/:orderId", orderController.getOrderDetail);
+router.post("/order/order-status/:orderId", orderController.updateOrderStatus);
+router.get("/order/order-delete/:orderId", orderController.deleteOrder);
 
 module.exports = router;

@@ -1,0 +1,106 @@
+<%- include('../../layouts/head.ejs') %>
+<body>
+    <div class="wrapper">
+        <%- include('../../layouts/topbar.ejs') %>
+        <%- include('../../layouts/navigation.ejs') %>
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/admin/dashboard">Grator Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="/admin/order/order-list">Order List</a></li>
+                                        <li class="breadcrumb-item active">Order Detail</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Order Detail</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="header-title">Sipariş Bilgileri</h4>
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">Sipariş No</dt>
+                                        <dd class="col-sm-9"><%= order.orderNumber %></dd>
+                                        <dt class="col-sm-3">Müşteri</dt>
+                                        <dd class="col-sm-9"><%= order.customerName %> (<%= order.customerEmail %>)</dd>
+                                        <dt class="col-sm-3">Tarih</dt>
+                                        <dd class="col-sm-9"><%= new Date(order.createdAt).toLocaleString() %></dd>
+                                        <dt class="col-sm-3">Durum</dt>
+                                        <dd class="col-sm-9">
+                                            <form method="post" action="/admin/order/order-status/<%= order._id %>">
+                                                <select name="status" class="form-select" style="width:auto;display:inline-block;">
+                                                    <option value="new" <%= order.status === "new" ? "selected" : "" %>>Yeni</option>
+                                                    <option value="preparing" <%= order.status === "preparing" ? "selected" : "" %>>Hazırlanıyor</option>
+                                                    <option value="shipping" <%= order.status === "shipping" ? "selected" : "" %>>Kargoda</option>
+                                                    <option value="completed" <%= order.status === "completed" ? "selected" : "" %>>Tamamlandı</option>
+                                                    <option value="cancelled" <%= order.status === "cancelled" ? "selected" : "" %>>İptal</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-primary btn-sm">Güncelle</button>
+                                                <input type="text" name="adminNote" class="form-control mt-2" placeholder="Admin Notu" value="<%= order.adminNote || '' %>">
+                                            </form>
+                                        </dd>
+                                        <dt class="col-sm-3">Toplam</dt>
+                                        <dd class="col-sm-9"><%= order.total ? order.total.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' }) : "-" %></dd>
+                                        <dt class="col-sm-3">Notlar</dt>
+                                        <dd class="col-sm-9"><%= order.note || "-" %></dd>
+                                        <dt class="col-sm-3">Admin Notu</dt>
+                                        <dd class="col-sm-9"><%= order.adminNote || "-" %></dd>
+                                    </dl>
+                                    <h5>Ürünler</h5>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Ürün</th>
+                                                <th>Adet</th>
+                                                <th>Fiyat</th>
+                                                <th>Varyasyonlar</th>
+                                                <th>Yüklenen Fotoğraflar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% order.items.forEach(function(item) { %>
+                                                <tr>
+                                                    <td><%= item.productName %></td>
+                                                    <td><%= item.quantity %></td>
+                                                    <td><%= item.price ? item.price.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' }) : "-" %></td>
+                                                    <td>
+                                                        <% if(item.options) { %>
+                                                            <ul>
+                                                                <% Object.keys(item.options).forEach(function(key) { %>
+                                                                    <li><%= key %>: <%= item.options[key] %></li>
+                                                                <% }) %>
+                                                            </ul>
+                                                        <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <% if(item.uploadedImages && item.uploadedImages.length) { %>
+                                                            <% item.uploadedImages.forEach(function(img) { %>
+                                                                <img src="/uploads/<%= img %>" alt="Yüklenen" style="max-width:60px;max-height:60px;margin:2px;">
+                                                            <% }) %>
+                                                        <% } else { %>
+                                                            Yok
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../layouts/end.ejs') %>
+    </div>
+</body>
