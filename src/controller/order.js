@@ -1,6 +1,7 @@
 const Order = require("../models/order");
 const fs = require("fs");
 const path = require("path");
+const mailer = require("../util/mailer");
 
 // Siparişleri listele (arama/filtre desteği)
 exports.getOrderList = async (req, res) => {
