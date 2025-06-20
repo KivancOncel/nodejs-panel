@@ -94,6 +94,20 @@
                                             <% }) %>
                                         </tbody>
                                     </table>
+                                    <h5>Kargo Bilgisi</h5>
+                                    <form method="post" action="/admin/order/order-shipping/<%= order._id %>">
+                                        <div class="row mb-2">
+                                            <div class="col-md-4">
+                                                <input type="text" name="shippingCompany" class="form-control" placeholder="Kargo Firması" value="<%= order.shippingCompany || '' %>">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" name="shippingCode" class="form-control" placeholder="Takip Kodu" value="<%= order.shippingCode || '' %>">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="submit" class="btn btn-info">Kaydet</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

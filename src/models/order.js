@@ -64,11 +64,14 @@ class Order {
     return db.collection("orders").findOne({ _id: new mongodb.ObjectId(id) });
   }
 
-  static async updateStatus(id, status, items, adminNote) {
+  static async updateStatus(id, status, items, adminNote, shippingCompany, shippingCode) {
     const db = await getDb();
+    const updateObj = { status, items, adminNote, updatedAt: Date.now() };
+    if (shippingCompany !== undefined) updateObj.shippingCompany = shippingCompany;
+    if (shippingCode !== undefined) updateObj.shippingCode = shippingCode;
     return db.collection("orders").updateOne(
-      { _id: new mongodb.ObjectId(id) },
-      { $set: { status, items, adminNote, updatedAt: Date.now() } }
+        { _id: new mongodb.ObjectId(id) },
+        { $set: updateObj }
     );
   }
 

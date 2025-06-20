@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.get("/", siteController.getIndex);
 router.get("/:slug", siteController.getContentBySlug);
+router.get("/haberler/:slug", siteController.getBlogBySlug);
 
 module.exports = router;

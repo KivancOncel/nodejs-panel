@@ -105,5 +105,6 @@ router.get("/order/order-list", orderController.getOrderList);
 router.get("/order/order-detail/:orderId", orderController.getOrderDetail);
 router.post("/order/order-status/:orderId", orderController.updateOrderStatus);
 router.get("/order/order-delete/:orderId", orderController.deleteOrder);
+router.post("/order/order-shipping/:orderId", orderController.updateOrderShipping);
 
 module.exports = router;

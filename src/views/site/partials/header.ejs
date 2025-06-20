@@ -1,0 +1,132 @@
+<header class="header-area clearfix header-hm9 transparent-bar">
+    <div class="container">
+        <div class="header-top-area header-top-border17">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-md-8 col-12">
+                    <div class="language-currency-wrap">
+                        <div class="same-language-currency language-style">
+                            <p class="py-4">Telefon: +90 507 377 75 95</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 d-none d-lg-block">
+                    <div class="logo-hm9 text-center m-0">
+                        <a href="index.html">
+                            <img alt="" src="img/logo.png" width="103" height="100%">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-4 col-12">
+                    <div class="header-right-wrap m-0">
+                        <div class="same-style header-search">
+                            <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
+                            <div class="search-content">
+                                <form action="#">
+                                    <input type="text" placeholder="Search" />
+                                    <button class="button-search"><i class="pe-7s-search"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                        <div class="same-style account-satting">
+                            <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
+                            <div class="account-dropdown">
+                                <ul>
+                                    <li><a href="login-register.html">Login</a></li>
+                                    <li><a href="login-register.html">Register</a></li>
+                                    <li><a href="wishlist.html">Wishlist  </a></li>
+                                    <li><a href="my-account.html">my account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="same-style header-wishlist">
+                            <a href="wishlist.html"><i class="pe-7s-like"></i></a>
+                        </div>
+                        <div class="same-style cart-wrap">
+                            <button class="icon-cart">
+                                <i class="pe-7s-shopbag"></i>
+                                <span class="count-style">02</span>
+                            </button>
+                            <div class="shopping-cart-content">
+                                <ul>
+                                    <li class="single-shopping-cart">
+                                        <div class="shopping-cart-img">
+                                            <a href="#"><img alt="" src="img/cart/cart-1.png"></a>
+                                        </div>
+                                        <div class="shopping-cart-title">
+                                            <h4><a href="#">T- Shart & Jeans </a></h4>
+                                            <h6>Qty: 02</h6>
+                                            <span>$260.00</span>
+                                        </div>
+                                        <div class="shopping-cart-delete">
+                                            <a href="#"><i class="fa fa-times-circle"></i></a>
+                                        </div>
+                                    </li>
+                                    <li class="single-shopping-cart">
+                                        <div class="shopping-cart-img">
+                                            <a href="#"><img alt="" src="img/cart/cart-2.png"></a>
+                                        </div>
+                                        <div class="shopping-cart-title">
+                                            <h4><a href="#">T- Shart & Jeans </a></h4>
+                                            <h6>Qty: 02</h6>
+                                            <span>$260.00</span>
+                                        </div>
+                                        <div class="shopping-cart-delete">
+                                            <a href="#"><i class="fa fa-times-circle"></i></a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="shopping-cart-total">
+                                    <h4>Shipping : <span>$20.00</span></h4>
+                                    <h4>Total : <span class="shop-total">$260.00</span></h4>
+                                </div>
+                                <div class="shopping-cart-btn btn-hover text-center">
+                                    <a class="default-btn" href="cart-page.html">view cart</a>
+                                    <a class="default-btn" href="checkout.html">checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom sticky-bar header-res-padding header-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-block d-lg-none">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img alt="" src="img/logo.png"  width="103" height="100%">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav>
+                            <ul>
+                                <% headerMenus.forEach(function(menu) { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<%= menu.url %>"><%= menu.title %></a>
+                                </li>
+                                <% }) %> 
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-area">
+                <div class="mobile-menu">
+                    <nav id="mobile-menu-active">
+                        <ul class="menu-overflow">
+                            <% headerMenus.forEach(function(menu) { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<%= menu.url %>"><%= menu.title %></a>
+                                </li>
+                            <% }) %> 
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

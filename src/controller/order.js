@@ -55,3 +55,26 @@ exports.deleteOrder = async (req, res) => {
   await Order.delete(req.params.orderId);
   res.redirect("/admin/order/order-list");
 };
+
+exports.updateOrderShipping = async (req, res) => {
+  const { shippingCompany, shippingCode } = req.body;
+  const order = await Order.getById(req.params.orderId);
+  if (!order) return res.redirect("/admin/order/order-list");
+
+  order.shippingCompany = shippingCompany;
+  order.shippingCode = shippingCode;
+  await Order.updateStatus(req.params.orderId, order.status, order.items, order.adminNote, shippingCompany, shippingCode);
+
+  // İstersen burada müşteriye kargo bilgisi maili de gönderebilirsin
+  if (order.customerEmail && shippingCode) {
+    const subject = "Siparişiniz Kargoya Verildi";
+    const html = `<p>Sayın ${order.customerName},</p>
+      <p>Siparişiniz <b>${shippingCompany}</b> ile kargoya verilmiştir.</p>
+      <p>Takip Kodunuz: <b>${shippingCode}</b></p>
+      <p>Sipariş Numaranız: <b>${order.orderNumber}</b></p>
+      <p>Teşekkürler.</p>`;
+    mailer.sendMail(order.customerEmail, subject, html);
+  }
+
+  res.redirect("/admin/order/order-detail/" + req.params.orderId);
+};

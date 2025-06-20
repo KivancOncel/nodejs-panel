@@ -52,6 +52,11 @@ class Blog {
     const db = await getDb();
     return db.collection("blogs").deleteOne({ _id: new mongodb.ObjectId(id) });
   }
+  
+  static async getBySlug(slug) {
+    const db = await getDb();
+    return db.collection("blogs").findOne({ slug });
+  }
 }
 
 module.exports = Blog;
