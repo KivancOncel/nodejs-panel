@@ -1,12 +1,14 @@
 const nodemailer = require("nodemailer");
 
+const { MAILUSER, MAILPASS } = process.env;
+
 const transporter = nodemailer.createTransport({
   host: "smtp.fovizo.com", // Örn: smtp.gmail.com
   port: 587,
   secure: false,
   auth: {
-    user: "info@fovizo.com",
-    pass: "oncel19881991"
+    user: MAILUSER,
+    pass: MAILPASS
   }
 });
 
